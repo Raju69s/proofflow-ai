@@ -1,0 +1,9 @@
+# ProofFlow AI robots.txt Config
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /dashboard/
+Disallow: /admin/
+
+# Sitemap index pointer
+Sitemap: https://proofflow.nl/sitemap.xml
