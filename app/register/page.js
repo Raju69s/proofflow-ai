@@ -1,8 +1,8 @@
 import React from 'react';
 import Link from 'next/link';
 import { ShieldCheck, ArrowLeft, Mail, Lock, Building, User } from 'lucide-react';
-import { Card, CardHeader, CardBody } from '../../../components/ui/Card';
-import { Button } from '../../../components/ui/Button';
+import { Card, CardHeader, CardBody } from '../../components/ui/Card';
+import { Button } from '../../components/ui/Button';
 
 export default function RegisterPage() {
   return (

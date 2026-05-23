@@ -3,25 +3,18 @@
 import React, { useState, useEffect } from 'react';
 import { 
   FolderLock, 
-  Users, 
-  CreditCard, 
-  Cpu, 
-  HardDrive, 
-  Settings2, 
-  Sparkles, 
-  Check, 
   PlusCircle,
   AlertCircle
 } from 'lucide-react';
-import { Card, CardHeader, CardBody } from '../../components/ui/Card';
-import { Badge } from '../../components/ui/Badge';
-import { Switch } from '../../components/ui/Switch';
-import { Button } from '../../components/ui/Button';
-import { Toast } from '../../components/ui/Toast';
-import { DEFAULT_MODULES } from '../../lib/services/modules';
-import { createClient } from '../../lib/supabase/client';
+import { Card, CardHeader, CardBody } from '../../../components/ui/Card';
+import { Badge } from '../../../components/ui/Badge';
+import { Switch } from '../../../components/ui/Switch';
+import { Button } from '../../../components/ui/Button';
+import { Toast } from '../../../components/ui/Toast';
+import { DEFAULT_MODULES } from '../../../lib/services/modules';
+import { createClient } from '../../../lib/supabase/client';
 
-export default function AdminPage() {
+export default function AdminModulesPage() {
   const [modules, setModules] = useState([]);
   const [toastMessage, setToastMessage] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -178,7 +171,7 @@ export default function AdminPage() {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[350px] space-y-4">
+      <div className="flex flex-col items-center justify-center min-h-[350px] space-y-4 animate-pulse">
         <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-purple-500 border-r-2 border-purple-500/20"></div>
         <p className="text-slate-400 text-[10px] tracking-widest uppercase font-semibold">Synchronizing with secure system registry...</p>
       </div>
@@ -187,63 +180,17 @@ export default function AdminPage() {
 
   return (
     <div className="space-y-8 animate-slide-up">
-      {/* 1. KPIs Section */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-6">
-        {/* KPI 1 */}
-        <Card variant="glass" className="p-5">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="p-2 bg-purple-500/10 text-purple-400 rounded-lg">
-              <Users size={16} />
-            </div>
-            <span className="text-xs font-semibold text-slate-400 uppercase tracking-widest">Active Trades</span>
-          </div>
-          <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-extrabold font-display text-white">1,248</span>
-            <span className="text-emerald-500 text-xs font-bold">+12%</span>
-          </div>
-        </Card>
-
-        {/* KPI 2 */}
-        <Card variant="glass" className="p-5">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="p-2 bg-emerald-500/10 text-emerald-400 rounded-lg">
-              <CreditCard size={16} />
-            </div>
-            <span className="text-xs font-semibold text-slate-400 uppercase tracking-widest">Active MRR</span>
-          </div>
-          <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-extrabold font-display text-white">$18,450</span>
-            <span className="text-emerald-500 text-xs font-bold">+8%</span>
-          </div>
-        </Card>
-
-        {/* KPI 3 */}
-        <Card variant="glass" className="p-5">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="p-2 bg-indigo-500/10 text-indigo-400 rounded-lg">
-              <Cpu size={16} />
-            </div>
-            <span className="text-xs font-semibold text-slate-400 uppercase tracking-widest">AI Token Usage</span>
-          </div>
-          <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-extrabold font-display text-white">4.8M</span>
-            <span className="text-slate-500 text-xs font-medium">/ 10M cap</span>
-          </div>
-        </Card>
-
-        {/* KPI 4 */}
-        <Card variant="glass" className="p-5">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="p-2 bg-pink-500/10 text-pink-400 rounded-lg">
-              <HardDrive size={16} />
-            </div>
-            <span className="text-xs font-semibold text-slate-400 uppercase tracking-widest">KB Storage Size</span>
-          </div>
-          <div className="flex items-baseline gap-1">
-            <span className="text-2xl font-extrabold font-display text-white">4.2GB</span>
-            <span className="text-slate-500 text-xs font-medium">/ 50GB cap</span>
-          </div>
-        </Card>
+      {/* Page Header */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h1 className="text-2xl font-extrabold text-white tracking-tight">Modules & Plugins Manager</h1>
+          <p className="text-slate-400 text-sm mt-1 font-sans">
+            Register new micro-SaaS modules, customize plan access controls, and manage feature visibility.
+          </p>
+        </div>
+        <Badge variant="pro" className="bg-purple-500/10 text-purple-400 border border-purple-500/20 text-xs py-1 px-3">
+          SaaS Catalogs
+        </Badge>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
@@ -252,15 +199,14 @@ export default function AdminPage() {
           <Card variant="glass">
             <CardHeader className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 bg-purple-950/10 border-b border-purple-500/10">
               <div>
-                <h3 className="font-display font-extrabold text-white text-lg flex items-center gap-2">
-                  <FolderLock className="text-purple-400" size={20} />
+                <h3 className="font-display font-extrabold text-white text-base flex items-center gap-2">
+                  <FolderLock className="text-purple-400" size={18} />
                   Modular Plugin Switchboard
                 </h3>
                 <p className="text-slate-400 text-xs font-sans mt-1">
                   Adjust plan access, toggle active flags, or assign coming soon status. Changes map instantly to tradesmen views.
                 </p>
               </div>
-              <Badge variant="pro">SaaS Module Manager</Badge>
             </CardHeader>
             <CardBody className="p-0">
               <div className="divide-y divide-white/5">
@@ -272,7 +218,7 @@ export default function AdminPage() {
                     {/* Info */}
                     <div className="space-y-1 max-w-md">
                       <div className="flex items-center gap-2 flex-wrap">
-                        <h4 className={`text-xs font-bold transition-colors duration-150 ${m.is_active ? 'text-white' : 'text-slate-500 line-through'}`}>
+                        <h4 className={`text-sm font-bold transition-colors duration-150 ${m.is_active ? 'text-white' : 'text-slate-500 line-through'}`}>
                           {m.name}
                         </h4>
                         {m.coming_soon && (
@@ -282,7 +228,7 @@ export default function AdminPage() {
                           <Badge variant="danger" className="text-[8px] font-bold">Disabled</Badge>
                         )}
                       </div>
-                      <p className="text-slate-400 text-[11px] leading-relaxed font-sans">{m.description}</p>
+                      <p className="text-slate-400 text-xs leading-relaxed font-sans">{m.description}</p>
                     </div>
 
                     {/* Controls */}
@@ -292,7 +238,7 @@ export default function AdminPage() {
                         value={m.plan_access}
                         disabled={!m.is_active}
                         onChange={(e) => handleChangeAccess(m.key, e.target.value)}
-                        className="bg-slate-900 border border-white/10 rounded-lg px-2 py-1 text-[11px] text-white focus:outline-none focus:border-purple-500 disabled:opacity-30 transition-all"
+                        className="bg-slate-900 border border-white/10 rounded-lg px-2.5 py-1 text-xs text-white focus:outline-none focus:border-purple-500 disabled:opacity-30 transition-all font-sans"
                       >
                         <option value="free">Free Access</option>
                         <option value="pro">Pro SaaS Only</option>
@@ -303,7 +249,7 @@ export default function AdminPage() {
                         value={m.coming_soon ? 'coming_soon' : 'active'}
                         disabled={!m.is_active}
                         onChange={(e) => handleChangeStatus(m.key, e.target.value)}
-                        className="bg-slate-900 border border-white/10 rounded-lg px-2 py-1 text-[11px] text-white focus:outline-none focus:border-purple-500 disabled:opacity-30 transition-all"
+                        className="bg-slate-900 border border-white/10 rounded-lg px-2.5 py-1 text-xs text-white focus:outline-none focus:border-purple-500 disabled:opacity-30 transition-all font-sans"
                       >
                         <option value="active">Live Tool</option>
                         <option value="coming_soon">Coming Soon</option>
@@ -339,7 +285,7 @@ export default function AdminPage() {
 
             <form onSubmit={handleCreateModule} className="space-y-4">
               <div>
-                <label className="block text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1.5">
+                <label className="block text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1.5 font-display">
                   Unique Tool Key
                 </label>
                 <input 
@@ -347,12 +293,12 @@ export default function AdminPage() {
                   value={newKey}
                   placeholder="e.g. video-reels"
                   onChange={(e) => setNewKey(e.target.value)}
-                  className="w-full bg-slate-950/60 border border-white/5 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500 transition-all placeholder:text-slate-700"
+                  className="w-full bg-slate-950/60 border border-white/5 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500 transition-all placeholder:text-slate-700 font-sans"
                 />
               </div>
 
               <div>
-                <label className="block text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1.5">
+                <label className="block text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1.5 font-display">
                   Plugin Public Name
                 </label>
                 <input 
@@ -360,12 +306,12 @@ export default function AdminPage() {
                   value={newName}
                   placeholder="e.g. AI Reel Script Generator"
                   onChange={(e) => setNewName(e.target.value)}
-                  className="w-full bg-slate-950/60 border border-white/5 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500 transition-all placeholder:text-slate-700"
+                  className="w-full bg-slate-950/60 border border-white/5 rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-purple-500 transition-all placeholder:text-slate-700 font-sans"
                 />
               </div>
 
               <div>
-                <label className="block text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1.5">
+                <label className="block text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1.5 font-display">
                   Description
                 </label>
                 <textarea 
@@ -377,15 +323,15 @@ export default function AdminPage() {
                 />
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-2 gap-3 font-sans">
                 <div>
-                  <label className="block text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1.5">
+                  <label className="block text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1.5 font-display">
                     Plan Group
                   </label>
                   <select
                     value={newPlan}
                     onChange={(e) => setNewPlan(e.target.value)}
-                    className="w-full bg-slate-950/60 border border-white/5 rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none focus:border-purple-500 transition-all"
+                    className="w-full bg-slate-950/60 border border-white/5 rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none focus:border-purple-500 transition-all font-sans"
                   >
                     <option value="free">Free Plan</option>
                     <option value="pro">Pro Plan</option>
@@ -393,13 +339,13 @@ export default function AdminPage() {
                 </div>
 
                 <div>
-                  <label className="block text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1.5">
+                  <label className="block text-[10px] font-semibold text-slate-400 uppercase tracking-widest mb-1.5 font-display">
                     Initial Status
                   </label>
                   <select
                     value={newStatus}
                     onChange={(e) => setNewStatus(e.target.value)}
-                    className="w-full bg-slate-950/60 border border-white/5 rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none focus:border-purple-500 transition-all"
+                    className="w-full bg-slate-950/60 border border-white/5 rounded-lg px-2.5 py-2 text-xs text-white focus:outline-none focus:border-purple-500 transition-all font-sans"
                   >
                     <option value="active">Live Tool</option>
                     <option value="coming_soon">Coming Soon</option>
@@ -410,7 +356,7 @@ export default function AdminPage() {
               <Button 
                 variant="accent" 
                 type="submit" 
-                className="w-full py-3 text-xs font-bold bg-purple-600 hover:bg-purple-500 shadow-md shadow-purple-600/10 mt-2"
+                className="w-full py-3 text-xs font-bold bg-purple-600 hover:bg-purple-500 shadow-md shadow-purple-600/10 mt-2 font-display"
               >
                 Register Module
               </Button>

@@ -17,6 +17,7 @@ import {
   Settings2,
   HardDrive
 } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 import { Button } from '../../components/ui/Button';
 import { Badge } from '../../components/ui/Badge';
 import { createClient } from '../../lib/supabase/client';
@@ -29,6 +30,18 @@ export default function DashboardLayout({ children }) {
   const [storageUsed, setStorageUsed] = useState(0.2); // Default mock fallback
   const maxGenerations = 5;
   const supabase = createClient();
+  const pathname = usePathname();
+
+  const navItems = [
+    { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
+    { name: 'All Tools', href: '/dashboard/tools', icon: Grid },
+    { name: 'Before & After Reports', href: '/dashboard/reports', icon: FileCheck },
+    { name: 'AI Social Posts', href: '/dashboard/social-posts', icon: FileText },
+    { name: 'Knowledge Base', href: '/dashboard/kb', icon: BookOpen },
+    { name: 'SEO Setup', href: '/dashboard/seo-setup', icon: Settings2 },
+    { name: 'Membership Plan', href: '/dashboard/billing', icon: Zap },
+    { name: 'Settings', href: '/dashboard/settings', icon: Settings },
+  ];
 
   useEffect(() => {
     async function loadUserSessionAndDetails() {
@@ -131,38 +144,24 @@ export default function DashboardLayout({ children }) {
 
           {/* Navigation links */}
           <nav className="p-4 space-y-1">
-            <Link href="/dashboard" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-              <LayoutDashboard size={18} />
-              <span>Dashboard</span>
-            </Link>
-            <Link href="/dashboard/tools" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-white/5 hover:text-white transition-all">
-              <Grid size={18} />
-              <span>All Tools</span>
-            </Link>
-            <Link href="/dashboard/reports" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-white/5 hover:text-white transition-all">
-              <FileCheck size={18} />
-              <span>Before & After Reports</span>
-            </Link>
-            <Link href="/dashboard/social-posts" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-white/5 hover:text-white transition-all">
-              <FileText size={18} />
-              <span>AI Social Posts</span>
-            </Link>
-            <Link href="/dashboard/kb" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-white/5 hover:text-white transition-all">
-              <BookOpen size={18} />
-              <span>Knowledge Base</span>
-            </Link>
-            <Link href="/dashboard/seo-setup" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-white/5 hover:text-white transition-all">
-              <Settings2 size={18} />
-              <span>SEO Setup</span>
-            </Link>
-            <Link href="/dashboard/billing" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-white/5 hover:text-white transition-all">
-              <Zap size={18} />
-              <span>Membership Plan</span>
-            </Link>
-            <Link href="/dashboard/settings" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-white/5 hover:text-white transition-all">
-              <Settings size={18} />
-              <span>Settings</span>
-            </Link>
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = pathname === item.href;
+              return (
+                <Link 
+                  key={item.href}
+                  href={item.href} 
+                  className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all border ${
+                    isActive 
+                      ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/20 font-semibold shadow-inner' 
+                      : 'text-slate-300 hover:bg-white/5 hover:text-white border-transparent font-medium'
+                  }`}
+                >
+                  <Icon size={18} />
+                  <span>{item.name}</span>
+                </Link>
+              );
+            })}
           </nav>
         </div>
 

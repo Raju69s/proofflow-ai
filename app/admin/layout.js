@@ -15,10 +15,22 @@ import {
   Settings2,
   TrendingUp
 } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 import { Badge } from '../../components/ui/Badge';
 
 export default function AdminLayout({ children }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const pathname = usePathname();
+
+  const navItems = [
+    { name: 'Overview', href: '/admin', icon: TrendingUp },
+    { name: 'Users Directory', href: '/admin/users', icon: Users },
+    { name: 'Payments', href: '/admin/payments', icon: CreditCard },
+    { name: 'Modules & Plugins', href: '/admin/modules', icon: FolderLock },
+    { name: 'Plans & Access', href: '/admin/plans', icon: Settings2 },
+    { name: 'AI Engine Metrics', href: '/admin/ai-usage', icon: Cpu },
+    { name: 'Storage Metrics', href: '/admin/storage', icon: HardDrive },
+  ];
 
   return (
     <div className="min-h-screen flex bg-slate-950">
@@ -57,34 +69,24 @@ export default function AdminLayout({ children }) {
 
           {/* Navigation Links */}
           <nav className="p-4 space-y-1">
-            <Link href="/admin" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-semibold bg-purple-500/10 text-purple-400 border border-purple-500/20">
-              <TrendingUp size={18} />
-              <span>Overview</span>
-            </Link>
-            <Link href="/admin/users" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-white/5 hover:text-white transition-all">
-              <Users size={18} />
-              <span>Users Directory</span>
-            </Link>
-            <Link href="/admin/payments" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-white/5 hover:text-white transition-all">
-              <CreditCard size={18} />
-              <span>Payments</span>
-            </Link>
-            <Link href="/admin/modules" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-white/5 hover:text-white transition-all">
-              <FolderLock size={18} />
-              <span>Modules & Plugins</span>
-            </Link>
-            <Link href="/admin/plans" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-white/5 hover:text-white transition-all">
-              <Settings2 size={18} />
-              <span>Plans & Access</span>
-            </Link>
-            <Link href="/admin/ai-usage" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-white/5 hover:text-white transition-all">
-              <Cpu size={18} />
-              <span>AI Engine Metrics</span>
-            </Link>
-            <Link href="/admin/storage" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-300 hover:bg-white/5 hover:text-white transition-all">
-              <HardDrive size={18} />
-              <span>Storage Metrics</span>
-            </Link>
+            {navItems.map((item) => {
+              const Icon = item.icon;
+              const isActive = pathname === item.href;
+              return (
+                <Link 
+                  key={item.href}
+                  href={item.href} 
+                  className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all border ${
+                    isActive 
+                      ? 'bg-purple-500/10 text-purple-400 border-purple-500/20 font-semibold shadow-inner' 
+                      : 'text-slate-300 hover:bg-white/5 hover:text-white border-transparent font-medium'
+                  }`}
+                >
+                  <Icon size={18} />
+                  <span>{item.name}</span>
+                </Link>
+              );
+            })}
           </nav>
         </div>
 
