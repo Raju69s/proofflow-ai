@@ -32,6 +32,17 @@ export default function DashboardLayout({ children }) {
   const supabase = createClient();
   const pathname = usePathname();
 
+  const handleSignOut = async () => {
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
+      localStorage.removeItem('proofflow_user_plan');
+      window.location.href = '/login';
+    } catch (err) {
+      console.error("Sign out failed:", err);
+    }
+  };
+
   const navItems = [
     { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
     { name: 'All Tools', href: '/dashboard/tools', icon: Grid },
@@ -213,9 +224,17 @@ export default function DashboardLayout({ children }) {
           )}
 
           {/* Admin panel quick gateway */}
-          <Link href="/admin" className="block text-center text-[10px] font-bold text-indigo-400 hover:text-indigo-300 uppercase tracking-widest pt-1">
-            Access System Admin
-          </Link>
+          <div className="flex flex-col gap-2 pt-1">
+            <Link href="/admin" className="block text-center text-[10px] font-bold text-indigo-400 hover:text-indigo-300 uppercase tracking-widest">
+              Access System Admin
+            </Link>
+            <button 
+              onClick={handleSignOut}
+              className="w-full text-center text-[10px] font-bold text-rose-400 hover:text-rose-300 uppercase tracking-widest border border-dashed border-rose-500/20 py-1.5 rounded-lg bg-rose-500/[0.02] hover:bg-rose-500/[0.06] transition-all"
+            >
+              Sign Out Session
+            </button>
+          </div>
         </div>
       </aside>
 
